@@ -10,6 +10,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    networks:
+      traefik:
     environment:
       CF_API_EMAIL: ${CLOUDFLARE_EMAIL}
       CF_API_KEY_FILE: /run/secrets/cloudflare_api_token
