@@ -20,7 +20,7 @@ services:
       - ./services/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
       - ./services/traefik/dynamic.yaml:/etc/traefik/dynamic.yaml:ro
       - ./services/traefik/acme.json:/etc/traefik/acme.json
-    commands:
+    command:
       - --certificatesResolvers.dns-cloudflare.acme.email=${CLOUDFLARE_EMAIL}
     labels:
       traefik.enable: true
