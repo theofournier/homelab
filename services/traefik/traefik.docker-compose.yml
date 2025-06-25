@@ -1,6 +1,6 @@
 secrets:
     cloudflare_api_token:
-            file: ./secrets/cloudflare-api-token.txt
+            file: ../../secrets/cloudflare-api-token.txt
 
 services:
   traefik:
@@ -17,9 +17,9 @@ services:
       - cloudflare_api_token
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./services/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
-      - ./services/traefik/dynamic.yaml:/etc/traefik/dynamic.yaml:ro
-      - ./services/traefik/acme.json:/etc/traefik/acme.json
+      - traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - dynamic.yaml:/etc/traefik/dynamic.yaml:ro
+      - acme.json:/etc/traefik/acme.json
     command:
       - --certificatesResolvers.dns-cloudflare.acme.email=${CLOUDFLARE_EMAIL}
     labels:
