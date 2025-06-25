@@ -1,7 +1,7 @@
 api:
   dashboard: true
 log:
-  level: WARN
+  level: INFO
 providers:
   docker:
     exposedByDefault: false
