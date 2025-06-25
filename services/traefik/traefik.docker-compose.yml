@@ -1,0 +1,30 @@
+secrets:
+    cloudflare_api_token:
+            file: ./secrets/cloudflare-api-token.txt
+
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:v3.4
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      CF_API_EMAIL: ${CLOUDFLARE_EMAIL}
+      CF_API_KEY_FILE: /run/secrets/cloudflare_api_token
+    secrets:
+      - cloudflare_api_token
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./services/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - ./services/traefik/dynamic.yaml:/etc/traefik/dynamic.yaml:ro
+      - ./services/traefik/acme.json:/etc/traefik/acme.json
+    commands:
+      - --certificatesResolvers.dns-cloudflare.acme.email=${CLOUDFLARE_EMAIL}
+    labels:
+      traefik.enable: true
+      traefik.http.routers.traefik.rule: Host(`traefik.${DOMAIN_NAME}`)
+      traefik.http.routers.traefik.entrypoints: websecure
+      traefik.http.routers.traefik.service: api@internal
+      traefik.http.services.traefik.loadbalancer.server.port: 8080
