@@ -21,7 +21,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
       - ./dynamic.yaml:/etc/traefik/dynamic.yaml:ro
-      - ./acme.json:/etc/traefik/acme.json
+      - traefik:/certs
     command:
       - --certificatesResolvers.dns-cloudflare.acme.email=${CLOUDFLARE_EMAIL}
     labels:
@@ -30,3 +30,7 @@ services:
       traefik.http.routers.traefik.entrypoints: websecure
       traefik.http.routers.traefik.service: api@internal
       traefik.http.services.traefik.loadbalancer.server.port: 8080
+
+volumes:
+  traefik:
+    name: traefik
