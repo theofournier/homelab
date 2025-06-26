@@ -20,3 +20,10 @@ Traefik with Docker for reverse proxy with Dashboard: https://doc.traefik.io/tra
 - Envs https://go-acme.github.io/lego/dns/cloudflare/
   - CLOUDFLARE_EMAIL
   - secrets/cloudflard-api-token.txt
+
+
+### Portainer
+
+Portainer in Docker: https://docs.portainer.io/start/install-ce/server/docker/linux
+
+- Dashboard: portainer.domain.dev

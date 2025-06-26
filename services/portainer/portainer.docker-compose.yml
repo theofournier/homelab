@@ -1,0 +1,19 @@
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:2.31
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer:/data portainer/
+    networks:
+      traefik:
+    labels:
+      traefik.enable: true
+      traefik.http.routers.portainer.rule: Host(`portainer.${DOMAIN_NAME}`)
+      traefik.http.routers.portainer.entrypoints: websecure
+      traefik.http.services.portainer.loadbalancer.server.port: 9443
+
+volumes:
+  portainer:
+    name: portainer
