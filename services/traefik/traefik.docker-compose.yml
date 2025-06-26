@@ -14,7 +14,7 @@ services:
       traefik:
     environment:
       CF_API_EMAIL: ${CLOUDFLARE_EMAIL}
-      CF_API_KEY_FILE: /run/secrets/cloudflare_api_token
+      CF_DNS_API_TOKEN_FILE: /run/secrets/cloudflare_api_token
     secrets:
       - cloudflare_api_token
     volumes:
