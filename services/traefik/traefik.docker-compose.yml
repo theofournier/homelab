@@ -1,6 +1,6 @@
 secrets:
-    cloudflare_api_token:
-            file: ../../secrets/cloudflare-api-token.txt
+  cloudflare_api_token:
+    file: ../../secrets/cloudflare-api-token.txt
 
 services:
   traefik:
