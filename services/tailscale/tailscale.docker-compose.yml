@@ -1,7 +1,3 @@
-secrets:
-  tailscale_docker_auth_key:
-    file: ../../secrets/tailscale-docker-auth-key.txt
-
 services:
   tailscale:
     container_name: tailscale
@@ -10,11 +6,9 @@ services:
     networks:
       traefik:
     environment:
-      TS_AUTHKEY: /run/secrets/tailscale_docker_auth_key
+      TS_AUTHKEY: ${TS_DOCKER_AUTH_KEY}
       TS_STATE_DIR: /var/lib/tailscale
       TS_USERSPACE: false
-    secrets:
-      - tailscale_docker_auth_key
     volumes:
       - tailscale:/var/lib/tailscale
     devices:
