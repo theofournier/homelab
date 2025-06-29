@@ -1,0 +1,9 @@
+services:
+  whoami:
+    image: traefik/whoami
+    container_name: test-whoami
+    networks:
+      traefik:
+    labels:
+      traefik.http.routers.whoami_https.rule: Host(`${DOMAIN_NAME}`)
+      traefik.http.routers.whoami_https.entrypoints: websecure

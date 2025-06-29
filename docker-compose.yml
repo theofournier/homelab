@@ -2,6 +2,7 @@ include:
   - services/tailscale/tailscale.docker-compose.yml
   - services/traefik/traefik.docker-compose.yml
   - services/portainer/portainer.docker-compose.yml
+  - services/whoami/whoami.docker-compose.yml
 
 networks:
   traefik:
