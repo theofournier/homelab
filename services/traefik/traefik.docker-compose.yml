@@ -7,11 +7,11 @@ services:
     container_name: traefik
     image: traefik:v3.4
     restart: unless-stopped
-    ports:
-      - "${TS_IP}:80:80"
-      - "${TS_IP}:443:443"
     networks:
       traefik:
+    depends_on:
+      - tailscale
+    network_mode: service:tailscale
     environment:
       CF_API_EMAIL: ${CLOUDFLARE_EMAIL}
       CF_DNS_API_TOKEN_FILE: /run/secrets/cloudflare_api_token
