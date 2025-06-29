@@ -7,8 +7,6 @@ services:
     container_name: traefik
     image: traefik:v3.4
     restart: unless-stopped
-    networks:
-      traefik:
     depends_on:
       - tailscale
     network_mode: service:tailscale
