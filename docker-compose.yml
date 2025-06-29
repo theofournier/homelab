@@ -1,5 +1,5 @@
 include:
-  - services/tailscale/tailscale.docker-compose.yaml
+  - services/tailscale/tailscale.docker-compose.yml
   - services/traefik/traefik.docker-compose.yml
   - services/portainer/portainer.docker-compose.yml
 
