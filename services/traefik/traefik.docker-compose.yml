@@ -13,7 +13,6 @@ services:
     environment:
       CF_API_EMAIL: ${CLOUDFLARE_EMAIL}
       CF_DNS_API_TOKEN_FILE: /run/secrets/cloudflare_api_token
-      LEGO_DISABLE_CNAME_SUPPORT: true
     secrets:
       - cloudflare_api_token
     volumes:
