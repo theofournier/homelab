@@ -1,0 +1,29 @@
+services:
+  traefik-tailscale:
+    container_name: traefik-tailscale
+    image: traefik:v3.4
+    restart: unless-stopped
+    depends_on:
+      - tailscale
+    network_mode: service:tailscale
+    environment:
+      CF_API_EMAIL: ${CLOUDFLARE_EMAIL}
+      CF_DNS_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - ./dynamic.yaml:/etc/traefik/dynamic.yaml:ro
+      - traefik-tailscale:/certs
+    command:
+      - --certificatesResolvers.dns-cloudflare.acme.email=${CLOUDFLARE_EMAIL}
+    labels:
+      traefik-tailscale: true
+      traefik.enable: true
+      traefik.http.routers.traefik-tailscale.rule: Host(`traefik.ts.${DOMAIN_NAME}`)
+      traefik.http.routers.traefik-tailscale.entrypoints: websecure
+      traefik.http.routers.traefik-tailscale.service: api@internal
+      traefik.http.services.traefik-tailscale.loadbalancer.server.port: 8080
+
+volumes:
+  traefik-tailscale:
+    name: traefik-tailscale

@@ -3,9 +3,11 @@ services:
     container_name: traefik
     image: traefik:v3.4
     restart: unless-stopped
-    depends_on:
-      - tailscale
-    network_mode: service:tailscale
+    networks:
+      traefik:
+    ports:
+      - "80:80"
+      - "443:443"
     environment:
       CF_API_EMAIL: ${CLOUDFLARE_EMAIL}
       CF_DNS_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
@@ -16,12 +18,6 @@ services:
       - traefik:/certs
     command:
       - --certificatesResolvers.dns-cloudflare.acme.email=${CLOUDFLARE_EMAIL}
-    labels:
-      traefik.enable: true
-      traefik.http.routers.traefik.rule: Host(`traefik.${DOMAIN_NAME}`)
-      traefik.http.routers.traefik.entrypoints: websecure
-      traefik.http.routers.traefik.service: api@internal
-      traefik.http.services.traefik.loadbalancer.server.port: 8080
 
 volumes:
   traefik:

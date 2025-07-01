@@ -5,5 +5,5 @@ services:
     networks:
       traefik:
     labels:
-      traefik.http.routers.whoami_https.rule: Host(`${DOMAIN_NAME}`)
+      traefik.http.routers.whoami_https.rule: Host(`whoami.${DOMAIN_NAME}`)
       traefik.http.routers.whoami_https.entrypoints: websecure
