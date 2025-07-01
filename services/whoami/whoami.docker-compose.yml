@@ -6,5 +6,6 @@ services:
       traefik:
     labels:
       traefik-proxy: true
+      traefik.enable: true
       traefik.http.routers.whoami_https.rule: Host(`whoami.${DOMAIN_NAME}`)
       traefik.http.routers.whoami_https.entrypoints: websecure
