@@ -7,6 +7,7 @@ providers:
     exposedByDefault: false
     endpoint: "unix:///var/run/docker.sock"
     network: traefik
+    constraints: "Label(`traefik-proxy`,`true`)"
   file:
     filename: /etc/traefik/dynamic.yaml
     watch: true
