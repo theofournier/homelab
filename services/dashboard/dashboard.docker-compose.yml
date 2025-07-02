@@ -1,0 +1,12 @@
+services:
+  dashboard:
+    container_name: dashboard
+    build: .
+    networks:
+      traefik-tailscale:
+    labels:
+      traefik-tailscale: true
+      traefik.enable: true
+      traefik.http.routers.dashboard.rule: Host(`ts.${DOMAIN_NAME}`)
+      traefik.http.routers.dashboard.entrypoints: websecure
+      traefik.http.services.dashboard.loadbalancer.server.port: 8080
