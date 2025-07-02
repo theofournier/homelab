@@ -7,6 +7,6 @@ services:
     labels:
       traefik-proxy: true
       traefik.enable: true
-      traefik.http.routers.home.rule: Host(${DOMAIN_NAME})
+      traefik.http.routers.home.rule: Host(`${DOMAIN_NAME}`)
       traefik.http.routers.home.entrypoints: websecure
       traefik.http.services.home.loadbalancer.server.port: 8080
