@@ -9,4 +9,4 @@ services:
       traefik.enable: true
       traefik.http.routers.dashboard.rule: Host(`ts.${DOMAIN_NAME}`)
       traefik.http.routers.dashboard.entrypoints: websecure
-      traefik.http.services.dashboard.loadbalancer.server.port: 8080
+      traefik.http.services.dashboard.loadbalancer.server.port: 80
