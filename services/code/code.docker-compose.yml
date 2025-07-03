@@ -8,9 +8,9 @@ services:
       PUID: 1000
       GUID: 1000
     volumes:
-      - $HOME/.local:/home/coder/.local
-      - $HOME/.config:/home/coder/.config
-      - $PWD:/home/coder/project
+      - code/.local:/home/coder/.local
+      - code/.config:/home/coder/.config
+      - code/project:/home/coder/project
     networks:
       traefik-tailscale:
     labels:
@@ -20,3 +20,7 @@ services:
       traefik.http.routers.code.entrypoints: websecure
       traefik.http.routers.code.service: websecure
       traefik.http.services.code.loadbalancer.server.port: 8080
+
+volumes:
+  code:
+    name: code
