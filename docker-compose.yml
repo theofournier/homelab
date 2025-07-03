@@ -5,6 +5,7 @@ include:
   - services/portainer/portainer.docker-compose.yml
   - services/home/home.docker-compose.yml
   - services/dashboard/dashboard.docker-compose.yml
+  - services/code/code.docker-compose.yml
 
 networks:
   traefik:

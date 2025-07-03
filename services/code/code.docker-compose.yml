@@ -1,0 +1,22 @@
+services:
+  code:
+    container_name: code
+    image: codercom/code-server:latest
+    restart: always
+    environment:
+      PASSWORD: ${CODE_PASSWORD}
+      PUID: 1000
+      GUID: 1000
+    volumes:
+      - $HOME/.local:/home/coder/.local
+      - $HOME/.config:/home/coder/.config
+      - $PWD:/home/coder/project
+    networks:
+      traefik-tailscale:
+    labels:
+      traefik-tailscale: true
+      traefik.enable: true
+      traefik.http.routers.code.rule: Host(`code.ts.${DOMAIN_NAME}`)
+      traefik.http.routers.code.entrypoints: websecure
+      traefik.http.routers.code.service: websecure
+      traefik.http.services.code.loadbalancer.server.port: 8080
