@@ -8,9 +8,9 @@ services:
       PUID: 1000
       GUID: 1000
     volumes:
-      - $HOME/.local:/home/coder/.local
-      - $HOME/.config:/home/coder/.config
-      - $PWD:/home/coder/project
+      - $HOME/code-server/.local:/home/coder/.local
+      - $HOME/code-server/.config:/home/coder/.config
+      - $HOME/code-server/projects:/home/coder/project
     networks:
       traefik-tailscale:
     labels:
