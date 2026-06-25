@@ -3,8 +3,8 @@
 
 ENV := --env-file .env
 # Order matters: socket-proxy before traefik (everything else routes via it).
-STACKS := socket-proxy traefik cloudflared portainer \
-          apps/public-site apps/whitelisted-tool apps/private-dashboard
+STACKS := socket-proxy traefik cloudflared apps/private/portainer \
+          apps/public/home apps/whitelist/example apps/private/code
 
 .PHONY: net up down restart logs ps pull
 
