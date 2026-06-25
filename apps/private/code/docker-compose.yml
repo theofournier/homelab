@@ -11,6 +11,7 @@ services:
     restart: always
     environment:
       PASSWORD: ${CODE_PASSWORD}
+      DOMAIN: ${DOMAIN}
       PUID: 1000
       GUID: 1000
     volumes:

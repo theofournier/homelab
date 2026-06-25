@@ -21,6 +21,7 @@ volumes:
 
 services:
   portainer:
+    container_name: portainer
     image: portainer/portainer-ce:latest
     restart: unless-stopped
     command: -H unix:///var/run/docker.sock

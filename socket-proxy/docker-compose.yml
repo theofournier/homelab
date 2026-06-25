@@ -11,6 +11,7 @@ networks:
 
 services:
   socket-proxy:
+    container_name: socket-proxy
     image: tecnativa/docker-socket-proxy:latest
     restart: unless-stopped
     networks:
