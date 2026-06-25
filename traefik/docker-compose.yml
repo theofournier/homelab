@@ -22,6 +22,10 @@ services:
       - ./dynamic:/etc/traefik/dynamic:ro
     environment:
       - DOMAIN=${DOMAIN}
+      # Pin the Docker API version. Talking through socket-proxy, Traefik's
+      # client can't negotiate and falls back to the ancient default (1.24),
+      # which the daemon rejects ("minimum supported API version is 1.40").
+      - DOCKER_API_VERSION=1.40
     labels:
       traefik.enable: "true"
       traefik.http.routers.dashboard.rule: "Host(`traefik.private.${DOMAIN}`)"
