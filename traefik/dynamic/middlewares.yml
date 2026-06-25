@@ -1,0 +1,19 @@
+# File-provider dynamic config: reusable middlewares.
+# Attach to any router with  ...middlewares=<name>@file
+
+http:
+  middlewares:
+    security-headers:
+      headers:
+        frameDeny: true
+        contentTypeNosniff: true
+        browserXssFilter: true
+        referrerPolicy: "strict-origin-when-cross-origin"
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+
+    # Simple in-Traefik rate limit you can attach to public apps.
+    rate-limit:
+      rateLimit:
+        average: 100
+        burst: 50

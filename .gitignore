@@ -1,0 +1,5 @@
+# Never commit secrets or runtime state
+.env
+**/.env
+**/data/
+apps/*/config/

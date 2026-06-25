@@ -1,0 +1,22 @@
+name: home
+
+# TIER: PUBLIC — anyone on the internet. No Cloudflare Access policy.
+# Hostname in CF tunnel: example.com  ->  http://traefik:80
+
+networks:
+  proxy:
+    external: true
+
+services:
+  home:
+    container_name: home
+    build: .
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.home.rule: "Host(`${DOMAIN}`) || Host(`www.${DOMAIN}`)"
+      traefik.http.routers.home.entrypoints: "web"
+      traefik.http.routers.home.middlewares: "security-headers@file,rate-limit@file"
+      traefik.http.services.home.loadbalancer.server.port: "80"

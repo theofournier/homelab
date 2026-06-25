@@ -1,0 +1,31 @@
+# Traefik static configuration.
+# TLS is terminated by Cloudflare at the edge, so Traefik only speaks plain
+# HTTP on an internal Docker network. It never listens on a public port.
+
+api:
+  dashboard: true            # exposed as traefik.${DOMAIN}, protect with CF Access
+
+log:
+  level: DEBUG
+entryPoints:
+  web:
+    address: ":80"
+    forwardedHeaders:
+      # Trust X-Forwarded-* only from the docker bridge range (cloudflared).
+      trustedIPs:
+        - "172.16.0.0/12"
+
+providers:
+  docker:
+    # Talk to the filtered, read-only socket proxy — never the raw socket.
+    endpoint: "tcp://socket-proxy:2375"
+    exposedByDefault: false  # opt in per-container with traefik.enable=true
+    network: proxy
+  file:
+    directory: /etc/traefik/dynamic
+    watch: true
+
+log:
+  level: INFO
+
+accessLog: {}

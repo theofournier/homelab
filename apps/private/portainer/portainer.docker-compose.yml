@@ -1,0 +1,37 @@
+name: portainer
+
+# Container management GUI — TIER: ONLY ME.
+# Routed through Traefik behind a Cloudflare Access policy (your email only),
+# exactly like the private dashboard. No host port is ever exposed.
+#
+#   Browse:  https://portainer.<DOMAIN>
+#   First visit sets the admin password — do it promptly; Portainer locks
+#   setup after a few minutes.
+#
+# NOTE: Portainer needs full read/write Docker access to manage containers,
+# so it mounts the real socket (not the proxy). Treat it as admin-only and
+# keep its Cloudflare Access policy locked to you.
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  portainer_data:
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    restart: unless-stopped
+    command: -H unix:///var/run/docker.sock
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    labels:
+      traefik.enable: true
+      traefik.http.routers.portainer.rule: "Host(`portainer.private.${DOMAIN}`)"
+      traefik.http.routers.portainer.entrypoints: "web"
+      traefik.http.routers.portainer.middlewares: "security-headers@file"
+      traefik.http.services.portainer.loadbalancer.server.port: 9000

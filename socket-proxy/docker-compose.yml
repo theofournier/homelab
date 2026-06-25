@@ -1,0 +1,31 @@
+name: socket-proxy
+
+# Filters access to the Docker API so Traefik only gets read-only endpoints
+# it actually needs (containers, networks, events) and can NEVER create,
+# modify, or exec into containers. This is the real socket; only this one
+# small, hardened container touches it.
+
+networks:
+  socket_proxy:
+    external: true
+
+services:
+  socket-proxy:
+    image: tecnativa/docker-socket-proxy:latest
+    restart: unless-stopped
+    networks:
+      - socket_proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      # 1 = allow, 0 = deny. tecnativa allows EVENTS/PING/VERSION by default.
+      - CONTAINERS=1   # Traefik needs to list/inspect containers
+      - NETWORKS=1     # ...and resolve their networks
+      - SERVICES=0
+      - TASKS=0
+      - SWARM=0
+      - NODES=0
+      - IMAGES=0
+      - VOLUMES=0
+      - INFO=0
+      - POST=0         # hard deny all write operations

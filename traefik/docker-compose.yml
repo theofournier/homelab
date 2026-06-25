@@ -1,0 +1,27 @@
+name: traefik
+
+networks:
+  proxy:
+    external: true
+  socket_proxy:
+    external: true
+
+services:
+  traefik:
+    image: traefik:v3.3
+    restart: unless-stopped
+    networks:
+      - proxy         # reach app containers + cloudflared
+      - socket_proxy  # reach the docker socket proxy (must start first)
+    # No `ports:` on purpose. cloudflared reaches it at http://traefik:80
+    # over the internal network. Nothing is published to the host.
+    # No docker.sock mount either — discovery goes through socket-proxy.
+    volumes:
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./dynamic:/etc/traefik/dynamic:ro
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dashboard.rule: "Host(`traefik.private.${DOMAIN}`)"
+      traefik.http.routers.dashboard.entrypoints: "web"
+      traefik.http.routers.dashboard.service: "api@internal"
+      traefik.http.routers.dashboard.middlewares: "security-headers@file"

@@ -1,0 +1,19 @@
+name: cloudflared
+
+networks:
+  proxy:
+    external: true
+
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    networks:
+      - proxy
+    # In the Cloudflare dashboard (Zero Trust -> Tunnels -> your tunnel ->
+    # Public Hostnames) point EVERY hostname's Service to:
+    #     http://traefik:80
+    # Traefik then routes by Host header to the right container.
