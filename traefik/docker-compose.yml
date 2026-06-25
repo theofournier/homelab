@@ -28,7 +28,7 @@ services:
       - DOCKER_API_VERSION=1.40
     labels:
       traefik.enable: "true"
-      traefik.http.routers.dashboard.rule: "Host(`traefik.private.${DOMAIN}`)"
+      traefik.http.routers.dashboard.rule: "Host(`traefik-private.${DOMAIN}`)"
       traefik.http.routers.dashboard.entrypoints: "web"
       traefik.http.routers.dashboard.service: "api@internal"
       traefik.http.routers.dashboard.middlewares: "security-headers@file"

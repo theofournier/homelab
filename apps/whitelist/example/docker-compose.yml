@@ -12,7 +12,7 @@ services:
       - proxy
     labels:
       traefik.enable: true
-      traefik.http.routers.whitelist-example.rule: Host(`example.whitelist.${DOMAIN}`)
+      traefik.http.routers.whitelist-example.rule: Host(`example.${DOMAIN}`)
       traefik.http.routers.whitelist-example.entrypoints: web
       traefik.http.routers.whitelist-example.middlewares: "security-headers@file"
       traefik.http.services.whitelist-example.loadbalancer.server.port: 80
