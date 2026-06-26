@@ -16,4 +16,4 @@ services:
       traefik.http.routers.omni-tools.rule: "Host(`omni-tools.${DOMAIN}`)"
       traefik.http.routers.omni-tools.entrypoints: "web"
       traefik.http.routers.omni-tools.middlewares: "security-headers@file"
-      traefik.http.services.omni-tools.loadbalancer.server.port: 8080
+      traefik.http.services.omni-tools.loadbalancer.server.port: 80
