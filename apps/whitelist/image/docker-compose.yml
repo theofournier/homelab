@@ -7,7 +7,7 @@ networks:
 services:
   image:
     container_name: image
-    image: ghcr.io/civilblur/mazanoke:1.1.6
+    image: ghcr.io/civilblur/mazanoke:latest
     restart: unless-stopped
     networks:
       - proxy
