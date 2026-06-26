@@ -1,0 +1,21 @@
+name: pdf
+
+networks:
+  proxy:
+    external: true
+
+services:
+  pdf:
+    container_name: pdf
+    image: stirlingtools/stirling-pdf:2.13.2
+    restart: unless-stopped
+    volumes:
+      - ./stirling-data:/configs
+    networks:
+      - proxy
+    labels:
+      traefik.enable: true
+      traefik.http.routers.pdf.rule: "Host(`pdf.${DOMAIN}`)"
+      traefik.http.routers.pdf.entrypoints: "web"
+      traefik.http.routers.pdf.middlewares: "security-headers@file"
+      traefik.http.services.pdf.loadbalancer.server.port: 8080

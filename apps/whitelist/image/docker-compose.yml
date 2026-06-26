@@ -1,0 +1,19 @@
+name: image
+
+networks:
+  proxy:
+    external: true
+
+services:
+  image:
+    container_name: image
+    image: ghcr.io/civilblur/mazanoke:1.1.6
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      traefik.enable: true
+      traefik.http.routers.image.rule: "Host(`image.${DOMAIN}`)"
+      traefik.http.routers.image.entrypoints: "web"
+      traefik.http.routers.image.middlewares: "security-headers@file"
+      traefik.http.services.image.loadbalancer.server.port: 80
