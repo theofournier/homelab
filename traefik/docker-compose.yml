@@ -9,7 +9,7 @@ networks:
 services:
   traefik:
     container_name: traefik
-    image: traefik:v3.3
+    image: traefik:v3.7.5
     restart: unless-stopped
     networks:
       - proxy         # reach app containers + cloudflared
@@ -22,10 +22,9 @@ services:
       - ./dynamic:/etc/traefik/dynamic:ro
     environment:
       - DOMAIN=${DOMAIN}
-      # Pin the Docker API version. Talking through socket-proxy, Traefik's
-      # client can't negotiate and falls back to the ancient default (1.24),
-      # which the daemon rejects ("minimum supported API version is 1.40").
-      - DOCKER_API_VERSION=1.40
+      # Docker API version is auto-negotiated since Traefik v3.6.1+ (it pings the
+      # daemon through socket-proxy and uses the version it advertises). Older
+      # Traefik hard-coded API 1.24 and the daemon rejected it as too old.
     labels:
       traefik.enable: "true"
       traefik.http.routers.dashboard.rule: "Host(`traefik-private.${DOMAIN}`)"

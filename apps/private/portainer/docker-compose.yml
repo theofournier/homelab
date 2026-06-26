@@ -22,7 +22,7 @@ volumes:
 services:
   portainer:
     container_name: portainer
-    image: portainer/portainer-ce:latest
+    image: portainer/portainer-ce:2.42.0
     restart: unless-stopped
     command: -H unix:///var/run/docker.sock
     networks:

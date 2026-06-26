@@ -1,0 +1,19 @@
+name: omni-tools
+
+networks:
+  proxy:
+    external: true
+
+services:
+  omni-tools:
+    container_name: omni-tools
+    image: iib0011/omni-tools:0.6
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      traefik.enable: true
+      traefik.http.routers.omni-tools.rule: "Host(`omni-tools.${DOMAIN}`)"
+      traefik.http.routers.omni-tools.entrypoints: "web"
+      traefik.http.routers.omni-tools.middlewares: "security-headers@file"
+      traefik.http.services.omni-tools.loadbalancer.server.port: 8080
